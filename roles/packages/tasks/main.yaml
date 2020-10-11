@@ -1,0 +1,14 @@
+---
+# tasks file for packages
+
+- name: Running apt-get update and upgrade
+  apt: upgrade=yes update_cache=yes
+
+
+- name: Installing packages
+  package:
+    name: "{{ item }}"
+  loop:
+    - xubuntu-desktop
+    - xserver-xorg-input-evdev
+

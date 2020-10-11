@@ -1,0 +1,89 @@
+---
+# tasks file for lcd
+
+- name: Backing up files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ item }}.orig"
+    force: no
+  loop:
+    - /boot/firmware/cmdline.txt
+    - /boot/firmware/usercfg.txt
+    - /boot/firmware/config.txt
+
+
+- name: Configuring /boot/firmware/usercfg.txt
+  blockinfile:
+    path: /boot/firmware/usercfg.txt
+    insertafter: configuration files on the boot partition
+    block: |
+      dtparam=i2c_arm=on
+      dtparam=audio=on
+      dtparam=spi=on
+      enable_uart=1
+      dtoverlay=waveshare35a
+      hdmi_drive=2
+      disable_overscan=1
+
+
+- name: Configuring /boot/firmware/cmdline.txt
+  copy:
+    src: cmdline.txt
+    dest: /boot/firmware/cmdline.txt
+    owner: root
+    group: root
+    mode: 0755
+
+
+- name: Creating /etc/X11/xorg.conf.d
+  file:
+    path: /etc/X11/xorg.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+
+- name: Copying 99-fbturbo.conf
+  copy:
+    src: 99-fbturbo.conf
+    dest: /usr/share/X11/xorg.conf.d/99-fbturbo.conf
+    owner: root
+    group: root
+    mode: 0644
+
+
+- name: Copying 99-calibration.conf
+  copy:
+    src: 99-calibration.conf
+    dest: /etc/X11/xorg.conf.d/99-calibration.conf
+    owner: root
+    group: root
+    mode: 0644
+
+
+- name: Copying evdev.conf
+  copy:
+    src: /usr/share/X11/xorg.conf.d/10-evdev.conf
+    dest: /usr/share/X11/xorg.conf.d/45-evdev.conf
+    owner: root
+    group: root
+    mode: 0644
+
+
+- name: Cloning git repo LCD-show
+  git:
+    repo: "https://github.com/waveshare/LCD-show.git"
+    dest: /root/LCD-show
+    clone: yes
+    umask: "022"
+
+
+- name: Copying overlays
+  copy: 
+    src: "/root/LCD-show/waveshare35a-overlay.dtb"
+    dest: "/boot/firmware/overlays/{{ item }}"
+    mode: 0755
+  loop:
+    - waveshare35a.dtb
+    - waveshare35a.dtbo

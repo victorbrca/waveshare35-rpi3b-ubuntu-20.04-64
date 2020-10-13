@@ -12,13 +12,12 @@ Other links:
 + [LCD Wiki](http://www.lcdwiki.com/3.5inch_RPi_Display)
 + [GitHub: lcdwiki/LCD-show-ubuntu](https://github.com/lcdwiki/LCD-show-ubuntu)
 
+#### Pre-install Notes
++ Make a backup of your Pi. I'm not responsible for any damage or files lost during the install process
++ Execute all steps as root
+
 Instructions
 ---
-
-_**Notes:**
-+ Make a backup of your Pi. I'm not responsible for any damage or files lost during the install process
-+ Execute all steps as root_
-
 
 a. Install ansible
 

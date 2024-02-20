@@ -8,13 +8,12 @@
     force: no
   loop:
     - /boot/firmware/cmdline.txt
-    - /boot/firmware/usercfg.txt
     - /boot/firmware/config.txt
 
 
-- name: Configuring /boot/firmware/usercfg.txt
+- name: Configuring /boot/firmware/config.txt
   blockinfile:
-    path: /boot/firmware/usercfg.txt
+    path: /boot/firmware/config.txt
     insertafter: configuration files on the boot partition
     block: |
       dtparam=i2c_arm=on

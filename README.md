@@ -30,7 +30,7 @@ b. Download the ansible repo to '/root'
 ```none
 # cd
 
-# git clone "https://github.com/redjoker/waveshare35-rpi4b-ubuntu-23.04-64.git"
+# git clone "https://github.com/victorbrca/waveshare35-rpi4b-ubuntu-23.04-64.git"
 ```
 
 c. Change into the project directory and run the Ansible playbook
